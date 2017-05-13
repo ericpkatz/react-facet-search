@@ -31,13 +31,15 @@ const generateFilters = ({ users })=> {
 
   return [
     {
+      type: 'select',
+      key: 'inStock',
+      choices: inStockChoices 
+    },
+    {
+      type: 'checkbox',
       key: 'userId',
       choices: userChoices 
     },
-    {
-      key: 'inStock',
-      choices: inStockChoices 
-    }
   ];
 };
 

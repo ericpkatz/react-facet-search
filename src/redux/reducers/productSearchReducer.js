@@ -7,26 +7,6 @@ const loadSearchProductsSuccess = (products)=> ({
   products: products
 });
 
-const loadProducts = ()=> {
-  return (dispatch)=> {
-    return axios.get('/api/products')
-      .then(response => dispatch(loadProductsSuccess(response.data)));
-  };
-};
-
-const destroyProduct = (product)=> {
-  return (dispatch)=> {
-    return axios.delete(`/api/products/${product.id}`)
-      .then(response => dispatch(loadProducts()));
-  };
-};
-
-const createProduct = (product)=> {
-  return (dispatch)=> {
-    return axios.post(`/api/products`, product)
-      .then(response => dispatch(loadProducts()));
-  };
-};
 
 const setFilter = (currentFilter = {})=> {
   return (dispatch)=> {
@@ -46,11 +26,7 @@ const search = (currentFilter)=> {
 };
 
 export {
-  loadProducts,
-  destroyProduct,
-  createProduct,
-  setFilter,
-  search
+  setFilter
 };
 
 const currentFilter = (currentFilter={}, action)=> {
