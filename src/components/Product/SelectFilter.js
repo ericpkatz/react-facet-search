@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
+import { computeSelectFilter, isSelectSelected } from '../../common/filterUtils';
 
 
 const _Filter = ({ filter, currentFilter, onFilterChange })=> {
@@ -11,7 +12,7 @@ const _Filter = ({ filter, currentFilter, onFilterChange })=> {
   return (
       <select onChange={ onChange } className='form-control'>
         {
-          filter.choices.map( (choice) => <option selected={ currentFilter[filter.key] == choice.value } value={ choice.value } key={ choice.text }>{ choice.text}</option> )
+          filter.choices.map( (choice) => <option selected={ isSelectSelected(currentFilter, filter, choice)} value={ choice.value } key={ choice.text }>{ choice.text}</option> )
         }
       </select>
   );
@@ -22,15 +23,7 @@ const mapStateToProps = ( { productSearch } )=> {
   return {
     currentFilter,
     onFilterChange: (key, value)=> {
-      const change = {};
-      change[key] = value;
-      let newFilter = Object.assign({}, currentFilter, change); 
-      newFilter = Object.keys(newFilter).reduce((memo, key)=> {
-        if(newFilter[key] != -1){
-          memo[key] = newFilter[key];
-        }
-        return memo;
-      }, {});
+      const newFilter = computeSelectFilter(currentFilter, key, value);
       hashHistory.push(`/products/${ encodeURI(JSON.stringify(newFilter))}`);
     }
   };
