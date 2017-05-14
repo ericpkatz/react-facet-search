@@ -1,11 +1,15 @@
 import { connect } from 'react-redux';
-import React from 'react';
+import React, { Component} from 'react';
 import { Link, hashHistory } from 'react-router';
 import Filter from './Filter';
 
-const FilterGroup = ({ filters, currentFilter, endPoint })=> {
+const FilterGroup = ( { filterConfig })=> {
+  const { filters, currentFilter, endPoint } = filterConfig;
   return (
     <div>
+      <pre>
+      { JSON.stringify(currentFilter) }
+      </pre>
       <Link to={ endPoint }>Clear Filters</Link>
       <div className='row'>
       {
@@ -16,5 +20,4 @@ const FilterGroup = ({ filters, currentFilter, endPoint })=> {
   );
 };
 
-
-export default FilterGroup; 
+export default FilterGroup;

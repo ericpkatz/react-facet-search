@@ -10,7 +10,7 @@ export const computeCheckBoxFilter = (currentFilter, key, value) => {
     newFilter[key].$in.push(value);
   }
 
-  if(value === -1){
+  if(value === -1 || newFilter[key].$in.length === 0){
     delete newFilter[key];
   }
   return newFilter;

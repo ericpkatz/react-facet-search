@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import ProductList from './ProductList';
-import ProductForm from './ProductForm';
 import { connect } from 'react-redux';
 import { setFilter } from '../../redux/reducers/productSearchReducer';
 import { generateFilters } from './utils';
 
 import FilterGroup from '../../common/FilterGroup';
 
-
-
-const _ProductsPage = ({ filters, currentFilter })=> (
+const _ProductsPage = ({ filterConfig })=> (
   <div className='well'>
-    <ProductForm />
-    <FilterGroup filters={ filters } currentFilter={ currentFilter } endPoint='/products'/>
+    <FilterGroup filterConfig={ filterConfig } />
     <ProductList />
   </div>
 );
@@ -29,7 +25,7 @@ class ProductsPage extends Component{
   }
   render(){
     return (
-      <_ProductsPage {...this.props }/>
+      <_ProductsPage {...this.props } params={ this.props.params }/>
     );
   }
 }
@@ -38,8 +34,11 @@ class ProductsPage extends Component{
 const mapStateToProps = ( { productSearch, users, categories } )=> {
   const { currentFilter } = productSearch;
   return {
-    filters: generateFilters({users, categories}),
-    currentFilter
+    filterConfig : {
+      filters: generateFilters({users, categories}),
+      currentFilter,
+      endPoint: '/products'
+    }
   };
 };
 
