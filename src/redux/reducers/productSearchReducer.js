@@ -30,7 +30,7 @@ export {
 };
 
 const currentFilter = (currentFilter={}, action)=> {
-  if(action.type === 'SET_FILTER' && JSON.stringify(action.currentFilter) !== JSON.stringify(currentFilter)){
+  if(action.type === 'SET_FILTER'){
     currentFilter = action.currentFilter;
   }
   return currentFilter;

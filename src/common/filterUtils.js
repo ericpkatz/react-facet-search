@@ -1,4 +1,5 @@
-export const computeCheckBoxFilter = (currentFilter, key, value) => {
+export const computeCheckBoxFilter = (currentFilter, filter, value) => {
+  const key = filter.key;
   let newFilter = Object.assign({}, currentFilter); 
   const filterValue = newFilter[key];
   if(!filterValue || typeof filterValue !== 'object')
@@ -10,14 +11,15 @@ export const computeCheckBoxFilter = (currentFilter, key, value) => {
     newFilter[key].$in.push(value);
   }
 
-  if(value === -1 || newFilter[key].$in.length === 0){
+  if(value === -1 || newFilter[key].$in.length === 0 || newFilter[key].$in.length=== filter.choices.length - 1){
     delete newFilter[key];
   }
   return newFilter;
 }
 
 export const isCheckBoxChecked = (currentFilter, filter, choice)=> {
-  return (
+  const returnValue =
+    (
     !currentFilter[filter.key] 
       &&
       choice.value === -1
@@ -27,7 +29,8 @@ export const isCheckBoxChecked = (currentFilter, filter, choice)=> {
     currentFilter[filter.key] 
       && currentFilter[filter.key]['$in']
       && currentFilter[filter.key]['$in'].indexOf(choice.value) !== -1 
-  );
+  )
+  return !!returnValue;
 }
 
 export const computeSelectFilter = (currentFilter, key, value)=> {

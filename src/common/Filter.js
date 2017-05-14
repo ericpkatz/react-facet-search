@@ -7,7 +7,7 @@ import CheckBoxFilter from './CheckBoxFilter';
 
 const Filter = ({ filter, currentFilter, endPoint })=> {
   const onFilter = (filter)=> {
-    hashHistory.push(`${endPoint}/${Object.keys(filter).length !== 0 ? encodeURI(JSON.stringify(filter)): ''}`);
+    hashHistory.push(`${endPoint}${Object.keys(filter).length !== 0 ? '/' + encodeURI(JSON.stringify(filter)): ''}`);
   }
 
   return (
