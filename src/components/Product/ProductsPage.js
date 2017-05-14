@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 import { connect } from 'react-redux';
-import { setFilter, search } from '../../redux/reducers/productSearchReducer';
-import { hashHistory } from 'react-router';
+import { setFilter } from '../../redux/reducers/productSearchReducer';
+import { generateFilters } from './utils';
 
-import ProductFilters from './ProductFilters';
+import FilterGroup from '../../common/FilterGroup';
 
 
 
-const _ProductsPage = ()=> (
+const _ProductsPage = ({ filters, currentFilter })=> (
   <div className='well'>
     <ProductForm />
-    <ProductFilters />
+    <FilterGroup filters={ filters } currentFilter={ currentFilter } endPoint='/products'/>
     <ProductList />
   </div>
 );
@@ -29,10 +29,19 @@ class ProductsPage extends Component{
   }
   render(){
     return (
-      <_ProductsPage />
+      <_ProductsPage {...this.props }/>
     );
   }
 }
+
+
+const mapStateToProps = ( { productSearch, users, categories } )=> {
+  const { currentFilter } = productSearch;
+  return {
+    filters: generateFilters({users, categories}),
+    currentFilter
+  };
+};
 
 
 
@@ -42,4 +51,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(null, mapDispatchToProps )(ProductsPage);
+export default connect(mapStateToProps, mapDispatchToProps )(ProductsPage);

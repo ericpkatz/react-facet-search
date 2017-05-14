@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { hashHistory } from 'react-router';
-import { computeCheckBoxFilter, isCheckBoxChecked } from '../../common/filterUtils';
+import { computeCheckBoxFilter, isCheckBoxChecked } from './filterUtils';
 
 
-const _Filter = ({ filter, currentFilter, onFilterChange })=> {
+const Filter = ({ filter, currentFilter, onFilter })=> {
   const onChange = (ev)=> {
     const idx = ev.target.getAttribute('data-idx');
     const value = filter.choices[idx].value;
-    onFilterChange(filter.key, value);
+    const newFilter = computeCheckBoxFilter(currentFilter, filter.key, value);
+    onFilter(newFilter);
   };
   return (
     <div>
@@ -32,15 +31,4 @@ const _Filter = ({ filter, currentFilter, onFilterChange })=> {
   );
 };
 
-const mapStateToProps = ( { productSearch } )=> {
-  const { currentFilter } = productSearch;
-  return {
-    currentFilter,
-    onFilterChange: (key, value)=> {
-      const newFilter = computeCheckBoxFilter(currentFilter, key, value);
-      hashHistory.push(`/products/${ encodeURI(JSON.stringify(newFilter))}`);
-    }
-  };
-};
-
-export default connect(mapStateToProps)(_Filter);
+export default Filter; 
