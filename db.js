@@ -13,6 +13,15 @@ const Product = conn.define('product', {
   }
 });
 
+const Category = conn.define('category', {
+  name: {
+    type: conn.Sequelize.STRING,
+    unique: true
+  }
+});
+
+Product.belongsTo(Category);
+
 const User = conn.define('user', {
   name: {
     type: conn.Sequelize.STRING,
@@ -28,15 +37,17 @@ const sync = ()=> conn.sync({ force: true });
 const seed = ()=> {
   const products = ['foo', 'bar', 'bazz'];
   const users = ['moe', 'larry', 'curly'];
-  let foo, bar, bazz, moe, larry, curly;
+  const categories = ['animal', 'vegetable', 'mineral'];
+  let foo, bar, bazz, moe, larry, curly, animal, vegetable, mineral;
 
   return sync()
     .then(()=> {
       const promises = products.map(name => Product.create({ name }))
-        .concat(users.map( name => User.create( { name, password: name.toUpperCase()})));
+        .concat(users.map( name => User.create( { name, password: name.toUpperCase()})))
+        .concat(categories.map( name => Category.create( { name })));
       return Promise.all(promises);
     })
-    .then( result => [ foo, bar, bazz, moe, larry, curly ] = result )
+    .then( result => [ foo, bar, bazz, moe, larry, curly, animal, vegetable, mineral ] = result )
     .then( ()=> {
       foo.inStock = false;
       return foo.save();
@@ -44,7 +55,10 @@ const seed = ()=> {
     .then(()=> Promise.all([
       foo.setUser(moe),
       bar.setUser(moe),
-      bazz.setUser(curly)
+      bazz.setUser(curly),
+      foo.setCategory(animal),
+      bar.setCategory(animal),
+      bazz.setCategory(mineral)
     ])
     )
     .then(()=> {
@@ -54,7 +68,10 @@ const seed = ()=> {
         curly,
         foo,
         bar,
-        bazz
+        bazz,
+        animal,
+        vegetable,
+        mineral
       };
     });
 };
@@ -62,7 +79,8 @@ const seed = ()=> {
 module.exports = {
   models: {
     Product,
-    User
+    User,
+    Category
   },
   sync,
   seed

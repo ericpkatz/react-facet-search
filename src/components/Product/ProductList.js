@@ -11,6 +11,10 @@ const ProductListItem = ({ product, destroyProduct })=> (
     {
       product.inStock ? ' in stock ' : 'out of stock'
     }
+    <br />
+    {
+      product.category.name
+    }
     <button onClick={ destroyProduct } className='btn btn-danger pull-right'>x</button>
     <br style={{ clear: 'both'}} />
   </li>

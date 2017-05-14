@@ -11,7 +11,7 @@ app.get('/products/:filter?', (req, res, next)=> {
   const options = {
     order: 'name',
     where: {},
-    include: [ models.User ]
+    include: [ models.User, models.Category ]
   };
 
   if(req.params.filter){
@@ -24,6 +24,12 @@ app.get('/products/:filter?', (req, res, next)=> {
 
 app.get('/users', (req, res, next)=> {
   models.User.findAll({ order: 'name'})
+    .then( users => res.send(users))
+    .catch(next);
+});
+
+app.get('/categories', (req, res, next)=> {
+  models.Category.findAll({ order: 'name'})
     .then( users => res.send(users))
     .catch(next);
 });

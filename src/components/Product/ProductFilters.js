@@ -16,12 +16,18 @@ const _ProductFilters = ({ filters, reset })=> {
   );
 };
 
-const generateFilters = ({ users })=> {
+const generateFilters = ({ users, categories })=> {
   const userChoices = users.map( user => ({
         value: user.id,
         text: user.name
       }));
   userChoices.unshift({ text: 'All', value: -1 });
+
+  const categoryChoices = categories.map( category => ({
+        value: category.id,
+        text: category.name
+      }));
+  categoryChoices.unshift({ text: 'All', value: -1 });
 
   const inStockChoices = [
     { text: 'All', value: -1 },
@@ -40,13 +46,18 @@ const generateFilters = ({ users })=> {
       key: 'userId',
       choices: userChoices 
     },
+    {
+      type: 'checkbox',
+      key: 'categoryId',
+      choices: categoryChoices 
+    },
   ];
 };
 
-const mapStateToProps = ( { productSearch, users } )=> {
+const mapStateToProps = ( { productSearch, users, categories } )=> {
   const { currentFilter } = productSearch;
   return {
-    filters: generateFilters({users}),
+    filters: generateFilters({users, categories}),
     reset: ()=> {
       hashHistory.push('/products');
     },

@@ -11,6 +11,7 @@ import LoginPage from './components/LoginPage';
 import { exchangeTokenForUser } from './redux/reducers/userReducer';
 import { loadProducts } from './redux/reducers/productsReducer';
 import { loadUsers } from './redux/reducers/usersReducer';
+import { loadCategories } from './redux/reducers/categoriesReducer';
 
 
 
@@ -32,6 +33,7 @@ const mapDispatchToProps = (dispatch)=> {
       .then( user => /*console.log(user)*/{});
     dispatch(loadProducts());
     dispatch(loadUsers());
+    dispatch(loadCategories());
   };
   return {
     bootstrap
