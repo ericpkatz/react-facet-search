@@ -11,6 +11,9 @@ const Product = conn.define('product', {
   inStock: {
     type: conn.Sequelize.BOOLEAN,
     defaultValue: true
+  },
+  description: {
+    type: conn.Sequelize.TEXT
   }
 });
 
@@ -51,7 +54,14 @@ const seed = ()=> {
     .then( result => [ foo, bar, bazz, moe, larry, curly, animal, vegetable, mineral ] = result )
     .then( ()=> {
       foo.inStock = false;
-      return foo.save();
+      foo.description = 'An excellent product';
+      bar.description = 'A good product';
+      bazz.description = 'A mediocre product';
+      return Promise.all([
+        foo.save(),
+        bar.save(),
+        bazz.save()
+      ]);
     })
     .then(()=> Promise.all([
       foo.setUser(moe),

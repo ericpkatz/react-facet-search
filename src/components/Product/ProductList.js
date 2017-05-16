@@ -15,6 +15,10 @@ const ProductListItem = ({ product, destroyProduct })=> (
     {
       product.category.name
     }
+    <br />
+    {
+      product.description
+    }
     <button onClick={ destroyProduct } className='btn btn-danger pull-right'>x</button>
     <br style={{ clear: 'both'}} />
   </li>

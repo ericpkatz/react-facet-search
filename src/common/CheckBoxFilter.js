@@ -11,6 +11,7 @@ class Filter extends Component{
       const newFilter = computeCheckBoxFilter(currentFilter, filter, value);
       onFilter(newFilter);
     };
+
     return (
       <div>
           {

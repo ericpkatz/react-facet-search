@@ -19,6 +19,10 @@ export const generateFilters = ({ users, categories })=> {
 
   return [
     {
+      type: 'text',
+      key: 'description'
+    },
+    {
       type: 'select',
       key: 'inStock',
       choices: inStockChoices 

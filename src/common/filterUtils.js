@@ -49,3 +49,14 @@ export const computeSelectFilter = (currentFilter, key, value)=> {
 export const isSelectSelected = (currentFilter, filter, choice)=> {
   return currentFilter[filter.key] == choice.value 
 }
+
+export const computeTextBoxFilter = (currentFilter, filter, value)=> {
+  const change = {};
+  change[filter.key] = { $ilike: `%${value}%`};
+  let newFilter = Object.assign({}, currentFilter, change); 
+  if(value === ''){
+    delete newFilter[filter.key];
+  }
+
+  return newFilter;
+}

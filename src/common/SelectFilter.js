@@ -9,9 +9,9 @@ const Filter = ({ filter, currentFilter, onFilter})=> {
     onFilter(newFilter);
   };
   return (
-      <select onChange={ onChange } className='form-control'>
+      <select onChange={ onChange } className='form-control' value={ currentFilter[filter.key] !== undefined ? currentFilter[filter.key] : - 1}>
         {
-          filter.choices.map( (choice) => <option selected={ isSelectSelected(currentFilter, filter, choice)} value={ choice.value } key={ choice.text }>{ choice.text}</option> )
+          filter.choices.map( (choice) => <option value={ choice.value } key={ choice.text }>{ choice.text}</option> )
         }
       </select>
   );
